@@ -5,7 +5,7 @@ name: Build and Deploy to Sandbox
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  #workflow_dispatch:
     
 jobs:
   build:
