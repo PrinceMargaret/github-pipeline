@@ -81,6 +81,12 @@ jobs:
          -Danypoint.password="$PASSWORD" \
          -DskipTests
 
+slackNotification:
+    needs: deploy
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
