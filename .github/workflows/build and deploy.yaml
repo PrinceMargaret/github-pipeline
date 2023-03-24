@@ -81,7 +81,7 @@ jobs:
          -Danypoint.password="$PASSWORD" \
          -DskipTests
 
-slackNotification:
+  slackNotification:
     needs: deploy
     name: Slack Notification
     runs-on: ubuntu-latest
