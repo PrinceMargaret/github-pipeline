@@ -93,7 +93,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Slack notification on failure
-        if:  ${{needs.build.outputs.build-result == 'failure'}}
+        if:  ${{ needs.build.outputs.build-result == 'failure'}}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
