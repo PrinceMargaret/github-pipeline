@@ -98,25 +98,25 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Slack notification on Build failure
-        #if:  ${{ needs.build.outputs.build-result == 'failure'  }}
+        if:  ${{ needs.build.outputs.build-result == 'failure'  }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: "#ff0000" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: ${{ github.event.head_commit.message }}  
-          SLACK_TITLE:  ${{ needs.build.outputs.deploy-result }}
+          SLACK_TITLE:  Build Failed
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Slack notification on Deployment failure
-        if:  ${{ needs.build.outputs.deploy-result == 'failure' }}
+        if:  ${{ needs.deploy.outputs.deploy-result == 'failure' }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: "#ff0000" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :rocket:'
+          SLACK_MESSAGE: ${{ github.event.head_commit.message }}
           SLACK_TITLE: Deployment Failed
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -128,7 +128,7 @@ jobs:
           SLACK_CHANNEL: general
           SLACK_COLOR: "good" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :rocket:'
+          SLACK_MESSAGE: ${{ github.event.head_commit.message }}
           SLACK_TITLE: Successfully Deployed
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
