@@ -48,8 +48,8 @@ jobs:
           name: artifacts
           path: target/*.jar
 
-      outputs:
-          build-result: ${{ job.status }}
+    outputs:
+        build-result: ${{ job.status }}
         
   deploy:
     needs: build
@@ -91,18 +91,7 @@ jobs:
     if: success() || failure()
     steps:
       - uses: actions/checkout@v2
-      - name: Slack notification on failure
-        if: ${{ cancelled() && needs.build.outputs.build-result == 'cancelled' }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: general
-          SLACK_COLOR: "bad" # or a specific color like 'good' or '#ff00ff'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Failed
-          SLACK_USERNAME: rtCamp
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+      
       - name: Slack notification on failure
         if:  ${{ failure() && needs.build.outputs.build-result == 'failure'}}
         uses: rtCamp/action-slack-notify@v2
