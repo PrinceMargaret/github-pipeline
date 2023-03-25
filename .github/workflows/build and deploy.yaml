@@ -47,6 +47,9 @@ jobs:
       with:
           name: artifacts
           path: target/*.jar
+
+      outputs:
+          build-result: ${{ job.status }}
         
   deploy:
     needs: build
@@ -89,7 +92,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Slack notification on failure
-        if: ${{ cancelled() }}
+        if: ${{ cancelled() && needs.build.outputs.build-result == 'cancelled' }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
@@ -101,7 +104,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Slack notification on failure
-        if: failure()
+        if:  ${{ failure() && needs.build.outputs.build-result == 'failure'}}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
