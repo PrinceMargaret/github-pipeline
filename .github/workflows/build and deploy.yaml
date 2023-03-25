@@ -97,20 +97,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Slack notification on failure
-        if:  ${{ needs.build.outputs.build-result == 'failure' || needs.build.outputs.deploy-result == 'failure' }}
+      - name: Slack notification on Build failure
+        if:  ${{ needs.build.outputs.build-result == 'failure' }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: "#ff0000" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-        if:  ${{ needs.build.outputs.build-result == 'failure' }}
-            SLACK_MESSAGE: 'Post Content :rocket:'
-            SLACK_TITLE: Build Failed
-        if:  ${{ needs.build.outputs.deploy-result == 'failure' }}
-            SLACK_MESSAGE: 'Post Content :rocket:'
-            SLACK_TITLE: Deployment Failed
+          SLACK_MESSAGE: 'Post Content :rocket:'
+          SLACK_TITLE: Build Failed
+          SLACK_USERNAME: rtCamp
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+      - name: Slack notification on Deployment failure
+        if:  ${{ needs.build.outputs.deploy-result == 'failure' }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: "#ff0000" # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: 'Post Content :rocket:'
+          SLACK_TITLE: Deployment Failed
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
