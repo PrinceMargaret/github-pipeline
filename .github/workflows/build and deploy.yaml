@@ -82,7 +82,7 @@ jobs:
         artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy \
          -Dmule.artifact=$artifactName \
-         -Danypoint.username="USERNAME" \
+         -Danypoint.username="$USERNAME" \
          -Danypoint.password="$PASSWORD" \
          -DskipTests
     
@@ -98,14 +98,14 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Slack notification on Build failure
-        if:  ${{ needs.build.outputs.build-result == 'failure' }}
+        if:  ${{ needs.build.outputs.build-result == 'failure' || true }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: "#ff0000" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Build Failed
+          SLACK_MESSAGE: 'Post Content :rocket:' ${{ needs.build.outputs.deploy-result
+          SLACK_TITLE: Build Failed ${{ needs.build.outputs.deploy-result == 'failure' }}
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
