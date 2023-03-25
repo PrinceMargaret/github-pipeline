@@ -86,7 +86,7 @@ jobs:
 
   slackNotification:
     needs: [ build, deploy ]
-    name: Slack Notification
+    name: Slack Notification 
     runs-on: ubuntu-latest
     if: success() || failure()
     steps:
