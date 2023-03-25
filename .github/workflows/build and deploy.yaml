@@ -4,7 +4,9 @@ name: Build and Deploy to Sandbox
 
 on:
   push:
-    branches: [ master , developer  ]
+    branches: 
+      - master 
+      - developer  
   #workflow_dispatch:
     
 jobs:
