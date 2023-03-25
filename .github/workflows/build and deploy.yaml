@@ -114,7 +114,7 @@ jobs:
           SLACK_COLOR: "good" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Success
+          SLACK_TITLE: Success${{ needs.build.outputs.build-result == 'failure'}}
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
