@@ -85,7 +85,7 @@ jobs:
     needs: [ build, deploy ]
     name: Slack Notification
     runs-on: ubuntu-latest
-    if: always()
+    if: success() || failure()
     steps:
       - uses: actions/checkout@v2
       - name: Slack notification on failure
