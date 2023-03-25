@@ -122,7 +122,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Slack notification on success
-        if: ${{ needs.build.outputs.build-result == 'success' && needs.build.outputs.deploy-result == 'success'}}
+        if: ${{ needs.build.outputs.build-result == 'success' && needs.deploy.outputs.deploy-result == 'success'}}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
