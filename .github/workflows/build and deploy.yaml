@@ -85,6 +85,9 @@ jobs:
          -Danypoint.username="$USERNAME" \
          -Danypoint.password="$PASSWORD" \
          -DskipTests
+    
+    outputs:
+      deploy-result: ${{ job.status }}
 
   slackNotification:
     needs: [ build, deploy ]
@@ -95,11 +98,11 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Slack notification on failure
-        if:  ${{ needs.build.outputs.build-result == 'failure'}}
+        if:  ${{ needs.build.outputs.build-result == 'failure' || needs.build.outputs.deploy-result == 'failure' }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
-          SLACK_COLOR: "bad" # or a specific color like 'good' or '#ff00ff'
+          SLACK_COLOR: "#ff0000" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: 'Post Content :rocket:'
           SLACK_TITLE: Failed
@@ -107,7 +110,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Slack notification on success
-        if: ${{ needs.build.outputs.build-result == 'success'}}
+        if: ${{ needs.build.outputs.build-result == 'success' && needs.build.outputs.deploy-result == 'success'}}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
