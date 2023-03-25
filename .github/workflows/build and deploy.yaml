@@ -50,6 +50,7 @@ jobs:
 
     outputs:
       build-result: ${{ job.status }}
+      run : echo "$build-result"
     
         
   deploy:
