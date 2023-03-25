@@ -104,8 +104,13 @@ jobs:
           SLACK_CHANNEL: general
           SLACK_COLOR: "#ff0000" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Failed
+          if:  ${{ needs.build.outputs.build-result == 'failure' }}
+            SLACK_MESSAGE: 'Post Content :rocket:'
+            SLACK_TITLE: Build Failed
+          if:  ${{ needs.build.outputs.deploy-result == 'failure' }}
+            SLACK_MESSAGE: 'Post Content :rocket:'
+            SLACK_TITLE: Deployment Failed
+
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -117,7 +122,7 @@ jobs:
           SLACK_COLOR: "good" # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Success
+          SLACK_TITLE: Successfully Deployed
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
