@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 {
-	"message" : "github-pipeline with slack notification in developer branch from master hi"
+	"message" : "github-pipeline with slack notification in developer branch from master hi bjkgjkkj margaret2 hi"
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
